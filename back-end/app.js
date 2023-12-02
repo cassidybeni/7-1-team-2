@@ -10,11 +10,7 @@ const usersController = require("./Controllers/usersController");
 // CONFIGURATION
 const app = express();
 
-
-app.use(cors({
-  origin: "https://eventful-capstone.netlify.app",
-  methods: 'GET, POST, PUT, DELETE',
-}));
+app.use(cors());
 
 // MIDDLEWARE
 app.use(express.json()); // Parse incoming JSON

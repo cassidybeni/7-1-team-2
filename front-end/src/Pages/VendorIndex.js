@@ -7,7 +7,7 @@ import CategorySwitch from "../Components/CategorySwitch";
 import axios from "axios";
 
 const apiKey = process.env.REACT_APP_API_KEY;
-const proxy = "https://morning-spire-06380.herokuapp.com";
+const proxy = "https://event-ful.adaptable.app";
 const yelpBase = "https://api.yelp.com/v3/businesses";
 const config = () => {
   return {

@@ -44,7 +44,7 @@ function App() {
     try {
       axios
         .get(
-          "https://morning-spire-06380.herokuapp.com/https://api.freegeoip.app/json?apikey=94974ea0-347f-11ec-a667-11ee2dd024a0"
+          "https://event-ful.adaptable.app/https://api.freegeoip.app/json?apikey=94974ea0-347f-11ec-a667-11ee2dd024a0"
         )
         .then((res) => {
           setLat(res.data.latitude);

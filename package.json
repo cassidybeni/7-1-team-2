@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/cassidybeni/7-1-team-2/issues"
   },
-  "homepage": "https://github.com/cassidybeni/7-1-team-2"
+  "homepage": "https://github.com/cassidybeni/7-1-team-2",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }

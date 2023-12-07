@@ -1,10 +1,9 @@
 import React, { useEffect, useState, createContext } from "react";
 import { useHistory } from "react-router-dom";
 import { auth } from "../Services/Firebase";
-import { apiURL } from "../util/apiURL";
 import axios from "axios";
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {

@@ -1,9 +1,8 @@
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-import { apiURL } from "../../util/apiURL";
 import React, { useEffect, useState } from "react";
 
-const api = apiURL();
+const API = process.env.REACT_APP_API;
 
 function Checklist({ categories, user_id, event_id, updateCost, eventName }) {
   const [bookedStatus, setBookedStatus] = useState({});

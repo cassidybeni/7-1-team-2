@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { apiURL } from "../../util/apiURL";
 import axios from "axios";
 
-const api = apiURL();
+const API = process.env.REACT_APP_API;
 
 function Timer({ user_id }) {
   const [date, setDate] = useState("");

@@ -3,11 +3,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Ratings from "react-ratings-declarative";
 import { Carousel } from "react-responsive-carousel";
-import { apiURL } from "../../util/apiURL";
 
 const parseNum = (str) => +str.replace(/[^.\d]/g, "");
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 
 function VendorShowInfo({ business, user_id, category }) {
   const [favorite, setFavorite] = useState(false);

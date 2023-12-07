@@ -1,11 +1,10 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { apiURL } from "../../util/apiURL.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 
 export default function NewChecklistForm({
   setUpdateEvent,

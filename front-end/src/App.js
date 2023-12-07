@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "./Providers/UserProvider";
-import { apiURL } from "./util/apiURL";
 import Booked from "./Pages/Booked.js";
 import Dashboard from "./Pages/Dashboard.js";
 import Event from "./Pages/EventPage";
@@ -22,7 +21,7 @@ import axios from "axios";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./App.css";
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 
 function App() {
   const loggedInUser = useContext(UserContext);

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { apiURL } from "../../util/apiURL.js";
 import NewChecklistForm from "./NewChecklistForm.js";
 import Form from "./Form.js";
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 
 function NewEventForm({ user_id, created, setCreated }) {
   const [eventId, setEventId] = useState(null);

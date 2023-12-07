@@ -3,11 +3,10 @@ import { useParams, useHistory } from "react-router-dom";
 import Checklist from "../Components/EventPage/Checklist";
 import Budget from "../Components/EventPage/Budget";
 import Timer from "../Components/EventPage/Timer";
-import { apiURL } from "../util/apiURL";
 import CapitalizeEvent from "../Components/CapitalizeEvent";
 import axios from "axios";
 
-const api = apiURL();
+const API = process.env.REACT_APP_API;
 
 export default function Event({ formatter, user_id }) {
   const { event_id } = useParams();

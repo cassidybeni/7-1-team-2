@@ -4,10 +4,9 @@ import { withRouter } from "react-router";
 import "../../css/SignInForm.css";
 import { userGoogleSignIn, userSignIn } from "../../Services/Firebase";
 import axios from "axios";
-import { apiURL } from "../../util/apiURL";
 import { ToastContainer, toast } from "react-toastify";
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 
 function SignInForm() {
   const history = useHistory();

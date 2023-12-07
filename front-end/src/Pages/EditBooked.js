@@ -4,10 +4,9 @@ import CategorySwitch from "../Components/CategorySwitch";
 import Vendor from "../Components/VendorIndex/Vendor";
 import api from "../util/apiCalls";
 import axios from "axios";
-import { apiURL } from "../util/apiURL";
 import Loading from "../Components/Loading";
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 
 const parseNum = (str) => +str.replace(/[^.\d]/g, "");
 

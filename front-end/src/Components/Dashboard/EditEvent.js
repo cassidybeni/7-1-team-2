@@ -2,12 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { apiURL } from "../../util/apiURL";
 import "../../css/EditEvent.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 
 function EditEvent({ setUpdateEvent, user_id }) {
   const { event_id } = useParams();

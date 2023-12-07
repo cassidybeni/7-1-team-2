@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Favorite from "./Favorite";
 import axios from "axios";
-import { apiURL } from "../../util/apiURL";
 import { VendorMenu } from "../NavBar/VendorMenu";
 import breakdance from "../../assets/breakdance.gif";
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 
 export default function FavoriteList({ user_id }) {
   const [favoriteVendors, setFavoriteVendors] = useState([]);

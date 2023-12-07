@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { userSignUp } from "../Services/Firebase";
 import axios from "axios";
-import { apiURL } from "../util/apiURL";
 import { ToastContainer, toast } from "react-toastify";
 
-const API = apiURL();
+const API = process.env.REACT_APP_API;
 
 export default function SignUp() {
   const history = useHistory();

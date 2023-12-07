@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import BookedVendor from "./BookedVendor";
-import { apiURL } from "../../util/apiURL";
-import breakdance from "../../assets/breakdance.gif"
-const API = apiURL();
+import breakdance from "../../assets/breakdance.gif";
+const API = process.env.REACT_APP_API;
 
 export default function BookedVendorList({ user_id }) {
   const [bookedVendors, setBookedVendors] = useState([]);
@@ -57,11 +56,12 @@ export default function BookedVendorList({ user_id }) {
           })}{" "}
         </ul>
       ) : (
-
-      <> <h2 className="none">No booked vendors ... </h2> <p className="yet">( yet ! )</p>
-      
-      <img src={breakdance} alt="breakdance" /> </>
-   
+        <>
+          {" "}
+          <h2 className="none">No booked vendors ... </h2>{" "}
+          <p className="yet">( yet ! )</p>
+          <img src={breakdance} alt="breakdance" />{" "}
+        </>
       )}
     </div>
   );

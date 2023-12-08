@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { withRouter } from "react-router";
+import React, { useState, useNavigate } from "react";
+import { Link } from "react-router-dom";
+import { withRouter  } from "react-router";
 import "../../css/SignInForm.css";
 import { userGoogleSignIn, userSignIn } from "../../Services/Firebase";
 import axios from "axios";
@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 const API = process.env.REACT_APP_API;
 
 function SignInForm() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -23,7 +23,7 @@ function SignInForm() {
     try {
       let res = await userSignIn(input.email, input.password);
       if (res === null) {
-        history.push("/dashboard");
+        navigate("/dashboard");
       } else {
         toast.error("Wrong email or password. Please try again", {
           toastId: "customId",
@@ -45,12 +45,12 @@ function SignInForm() {
         const { email } = res;
         let checkUser = await axios.get(`${API}/users/${email}`);
         if (checkUser.data.success) {
-          history.push("/dashboard");
+          navigate("/dashboard");
         } else {
           const newUser = { email: res.email, password: "password" };
           let result = await axios.post(`${API}/users`, newUser);
           if (result.data.success) {
-            history.push("/dashboard");
+            navigate("/dashboard");
           } else {
             console.warn("could not add new user to backend database");
           }

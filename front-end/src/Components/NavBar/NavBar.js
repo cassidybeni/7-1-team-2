@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useNavigate } from "react";
 import { VendorMenu } from "./VendorMenu";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NavBar.css";
 import { userSignOut } from "../../Services/Firebase";
 
 export default function NavBar({setSignedOut}) {
   const [vendorClicked, setVendorClicked] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleVendorClick = () => {
     setVendorClicked(!vendorClicked);
   };
@@ -32,7 +32,7 @@ export default function NavBar({setSignedOut}) {
       let res = await userSignOut();
       if (res === null) {
         setSignedOut(true)
-        history.push("/")
+        navigate("/")
       }
     } catch (e) {
       console.warn(e);

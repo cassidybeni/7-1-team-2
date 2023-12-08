@@ -1,12 +1,12 @@
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import React, { useEffect, useState, useNavigate } from "react";
 
 const API = process.env.REACT_APP_API;
 
 function Checklist({ categories, user_id, event_id, updateCost, eventName }) {
   const [bookedStatus, setBookedStatus] = useState({});
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const booked = {};
@@ -176,7 +176,7 @@ function Checklist({ categories, user_id, event_id, updateCost, eventName }) {
       <button
         className="book-buttons check drop"
         id="all-booked"
-        onClick={() => history.push(`/booked/${event_id}/${eventName}`)}
+        onClick={() => navigate(`/booked/${event_id}/${eventName}`)}
       >
         {" "}
         View All Booked Vendors for {eventName}

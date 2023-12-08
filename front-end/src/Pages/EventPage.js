@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect, useState, useNavigate } from "react";
+import { useParams } from "react-router-dom";
 import Checklist from "../Components/EventPage/Checklist";
 import Budget from "../Components/EventPage/Budget";
 import Timer from "../Components/EventPage/Timer";
@@ -14,7 +14,7 @@ export default function Event({ formatter, user_id }) {
   const [categories, setCategories] = useState([]);
   const [budget, setBudget] = useState(0);
   const [shownCost, setShownCost] = useState({});
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user_id) {
@@ -78,7 +78,7 @@ export default function Event({ formatter, user_id }) {
     <>
       <button
         className="pg-buttons back-button"
-        onClick={() => history.push("/dashboard")}
+        onClick={() => navigate("/dashboard")}
       >
         {" "}
         &#x21e6; Back to Dashboard

@@ -1,6 +1,4 @@
-
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useNavigate } from "react";
 import { userSignUp } from "../Services/Firebase";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 const API = process.env.REACT_APP_API;
 
 export default function SignUp() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     userName: "",
     email: "",
@@ -27,7 +25,7 @@ export default function SignUp() {
         const newUser = { email: input.email, password: input.password };
         const result = await axios.post(`${API}/users`, newUser);
         if (result.data.success) {
-          history.push("/dashboard");
+          navigate("/dashboard");
         } else {
           console.warn("Could not add new user to the backend database");
         }

@@ -1,6 +1,6 @@
 import api from "../util/apiCalls";
-import { useParams, useHistory } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useNavigate } from "react";
 import VendorReviews from "../Components/VendorShow/VendorReviews";
 import VendorShowInfo from "../Components/VendorShow/VendorShowInfo";
 import Loading from "../Components/Loading";
@@ -20,7 +20,7 @@ export default function VendorShow({ user_id }) {
   ]);
 
   const { provider_id, category } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -46,11 +46,15 @@ export default function VendorShow({ user_id }) {
     };
   }, [provider_id]);
 
+  const goBack = () => {
+    navigate(-1)
+  };
+
   return (
     <>
       <button
         className="pg-buttons back-button"
-        onClick={() => history.goBack()}
+        onClick={() => goBack()}
       >
         {" "}
         &#x21e6; Back to {CategorySwitch(category)}

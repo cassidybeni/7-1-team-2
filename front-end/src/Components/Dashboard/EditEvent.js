@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useNavigate } from "react";
 import { useParams } from "react-router";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../../css/EditEvent.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,7 +10,7 @@ const API = process.env.REACT_APP_API;
 
 function EditEvent({ setUpdateEvent, user_id }) {
   const { event_id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const head = useRef("");
 
   const [event, setEvent] = useState({
@@ -158,7 +158,7 @@ function EditEvent({ setUpdateEvent, user_id }) {
 
     if (Object.values(checklist).includes(true)) {
       updateEvent(event, event_id);
-      history.push("/dashboard");
+      navigate("/dashboard");
     } else {
       toast.error("Choose at least one vendor to add to your checklist", {
         toastId: "customId",

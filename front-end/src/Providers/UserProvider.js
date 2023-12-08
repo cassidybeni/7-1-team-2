@@ -1,5 +1,4 @@
-import React, { useEffect, useState, createContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState, createContext, useNavigate } from "react";
 import { auth } from "../Services/Firebase";
 import axios from "axios";
 
@@ -8,7 +7,7 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     auth.onAuthStateChanged((loggedInUser) => {
@@ -18,7 +17,7 @@ export const UserProvider = ({ children }) => {
         setCurrentUser(null);
       }
     });
-  }, [history]);
+  }, [navigate]);
 
   useEffect(() => {
     (async () => {

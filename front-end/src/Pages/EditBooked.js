@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router";
+import React, { useState, useEffect, useNavigate } from "react";
+import { useParams } from "react-router";
 import CategorySwitch from "../Components/CategorySwitch";
 import Vendor from "../Components/VendorIndex/Vendor";
 import api from "../util/apiCalls";
@@ -20,7 +20,7 @@ function EditBooked({ lat, lng, formatter, user_id }) {
   const [zip, setZip] = useState("");
   const [searched, setSearched] = useState(false);
   const [selected, setSelected] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let vendorCategories = [];
@@ -148,13 +148,13 @@ function EditBooked({ lat, lng, formatter, user_id }) {
       category: category,
       rating: selected.rating,
       vendor_image: selected.image_url,
-      amount: 0
+      amount: 0,
     };
 
     let checklistBody = {
       is_completed: true,
       task_name: category,
-      task_cost: 0
+      task_cost: 0,
     };
 
     if (!vendor) {
@@ -190,8 +190,8 @@ function EditBooked({ lat, lng, formatter, user_id }) {
                   setVendor(selected);
                   setVendors([]);
                   setSearched(false);
-                  setSelected(true)
-                  setCost(0)
+                  setSelected(true);
+                  setCost(0);
                 });
             } catch (e) {
               console.error(e);
@@ -276,8 +276,8 @@ function EditBooked({ lat, lng, formatter, user_id }) {
       direction = (
         <>
           <p className="directions">
-           ( If you have changed vendors, search by zip code above to select the
-            vendor that you've booked ){" "}
+            ( If you have changed vendors, search by zip code above to select
+            the vendor that you've booked ){" "}
           </p>
         </>
       );
@@ -299,12 +299,13 @@ function EditBooked({ lat, lng, formatter, user_id }) {
     return direction;
   };
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
-      <button
-        className="pg-buttons back-button"
-        onClick={() => history.goBack()}
-      >
+      <button className="pg-buttons back-button" onClick={goBack}>
         {" "}
         &#x21e6; Back to Event
       </button>

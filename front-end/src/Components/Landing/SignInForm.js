@@ -16,14 +16,12 @@ function SignInForm() {
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-
   const signIn = async (e) => {
     e.preventDefault();
     try {
       let res = await userSignIn(input.email, input.password);
+
       if (res === null) {
-        navigate("/dashboard");
-      } else {
         toast.error("Wrong email or password. Please try again", {
           toastId: "customId",
         });
@@ -31,9 +29,23 @@ function SignInForm() {
           email: "",
           password: "",
         });
+      } else {
+        // Check the condition for successful sign-in
+        if (res.success) {
+          // Successfully signed in, navigate to the dashboard or another route
+          navigate("/dashboard");
+        } else {
+          toast.error("Wrong email or password. Please try again", {
+            toastId: "customId",
+          });
+          setInput({
+            email: "",
+            password: "",
+          });
+        }
       }
     } catch (error) {
-      alert(error);
+      alert(error); // Display an error message or handle the error as needed
     }
   };
 
@@ -101,11 +113,7 @@ function SignInForm() {
         </button>
         <div className="divider"></div>
         <Link to="/signup" className="SignUp-But">
-          <p>
-            {" "}
-            Dont have an account? 
-            Click Here to make one!
-          </p>
+          <p> Dont have an account? Click Here to make one!</p>
         </Link>
       </div>
       <ToastContainer autoClose={false} position="center" />

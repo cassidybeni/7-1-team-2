@@ -115,96 +115,92 @@ function App() {
             <Route
               path="/dashboard/:event_id/edit"
               element={
-                <PrivateRoute
-                  component={
-                    <EditFormPage
-                      setUpdateEvent={setUpdateEvent}
-                      user_id={user_id}
-                    />
-                  }
-                />
+                <PrivateRoute>
+                  <EditFormPage
+                    setUpdateEvent={setUpdateEvent}
+                    user_id={user_id}
+                  />
+                </PrivateRoute>
               }
             />
 
             <Route
               path="/dashboard"
               element={
-                <PrivateRoute
-                  component={
-                    <Dashboard
-                      deleteEvent={deleteEvent}
-                      events={events}
-                      setUpdateEvent={setUpdateEvent}
-                      user_id={user_id}
-                      formattedName={formattedName}
-                      created={created}
-                      setCreated={setCreated}
-                    />
-                  }
-                />
+                <PrivateRoute>
+                  <Dashboard
+                    deleteEvent={deleteEvent}
+                    events={events}
+                    setUpdateEvent={setUpdateEvent}
+                    user_id={user_id}
+                    formattedName={formattedName}
+                    created={created}
+                    setCreated={setCreated}
+                  />
+                </PrivateRoute>
               }
             />
 
             <Route
               path="/task/:category/:event_id/:task_id"
               element={
-                <PrivateRoute
-                  component={
-                    <EditBooked
-                      lat={lat}
-                      lng={lng}
-                      formatter={formatter}
-                      user_id={user_id}
-                    />
-                  }
-                />
+                <PrivateRoute>
+                  <EditBooked
+                    lat={lat}
+                    lng={lng}
+                    formatter={formatter}
+                    user_id={user_id}
+                  />
+                </PrivateRoute>
               }
             />
 
             <Route
               path="/event/:event_id"
               element={
-                <PrivateRoute
-                  component={<Event formatter={formatter} user_id={user_id} />}
-                />
+                <PrivateRoute>
+                  <Event formatter={formatter} user_id={user_id} />
+                </PrivateRoute>
               }
             />
 
             <Route
               path="/vendor/:category/:provider_id"
               element={
-                <PrivateRoute component={<VendorShow user_id={user_id} />} />
+                <PrivateRoute>
+                  <VendorShow user_id={user_id} />
+                </PrivateRoute>
               }
             />
 
             <Route
               path="/favorites"
               element={
-                <PrivateRoute
-                  component={
-                    <Favorites
-                      loggedInUser={loggedInUser}
-                      user_id={user_id}
-                      formattedName={formattedName}
-                    />
-                  }
-                />
+                <PrivateRoute>
+                  <Favorites
+                    loggedInUser={loggedInUser}
+                    user_id={user_id}
+                    formattedName={formattedName}
+                  />
+                </PrivateRoute>
               }
             />
 
             <Route
               path="/vendors/:category"
               element={
-                <PrivateRoute
-                  component={<VendorIndex lat={lat} lng={lng} city={city} />}
-                />
+                <PrivateRoute>
+                  <VendorIndex lat={lat} lng={lng} city={city} />
+                </PrivateRoute>
               }
             />
 
             <Route
               path="/booked/:event_id/:event_name"
               element={
-                <PrivateRoute component={<Booked user_id={user_id} />} />
+                <PrivateRoute>
+                  <Booked user_id={user_id} />
+                </PrivateRoute>
               }
             />
 

@@ -1,5 +1,6 @@
-import React, { useState, useNavigate } from "react";
+import React, { useState } from "react";
 import { userSignUp } from "../Services/Firebase";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -17,13 +18,16 @@ export default function SignUp() {
     setInput({ ...input, [e.target.id]: e.target.value });
   };
 
-  const handleSignUp = async (event) => {
-    event.preventDefault();
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
     try {
       const res = await userSignUp(input.email, input.password, input.userName);
+      
       if (res) {
         const newUser = { email: input.email, password: input.password };
         const result = await axios.post(`${API}/users`, newUser);
+
         if (result.data.success) {
           navigate("/dashboard");
         } else {
@@ -32,8 +36,8 @@ export default function SignUp() {
       } else {
         toast.error("Please enter all required info", { toastId: "customId" });
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -52,8 +56,8 @@ export default function SignUp() {
                 value={input.userName}
                 onChange={handleChange}
                 placeholder="Name"
-              />{" "}
-              <label htmlFor="Email">Please Enter your Email</label>
+              />
+              <label htmlFor="email">Please Enter your Email</label>
               <input
                 type="email"
                 id="email"
@@ -61,16 +65,14 @@ export default function SignUp() {
                 onChange={handleChange}
                 placeholder="Email"
               />
-              <label htmlFor="PassWord">
-                Select a Password (min 6 characters)
-              </label>{" "}
+              <label htmlFor="password">Select a Password (min 6 characters)</label>
               <input
                 type="password"
                 id="password"
                 value={input.password}
                 onChange={handleChange}
                 placeholder="Password"
-              />{" "}
+              />
             </span>
             <button type="submit" className="Login SignUp pg-buttons">
               Sign Up

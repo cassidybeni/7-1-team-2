@@ -29,11 +29,13 @@ export const auth = getAuth();
 export const userSignUp = async (userName, email, password) => {
   let result = null;
   try {
-    await createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        updateProfile(userCredential.user, { displayName: userName });
-      }
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
     );
+    await updateProfile(userCredential.user, { displayName: userName });
+    result = userCredential.user;
   } catch (e) {
     result = e.code;
   }

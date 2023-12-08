@@ -35,44 +35,39 @@ export const userSignUp = async (email, password, userName) => {
     );
     await updateProfile(userCredential.user, { displayName: userName });
     return userCredential.user;
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error("Error signing up:", error);
+    throw error; // Rethrow the error for better handling in the component
   }
 };
 
 export const userSignIn = async (email, password) => {
-  let result = null;
   try {
-    await signInWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {}
-    );
-  } catch (e) {
-    result = e.code;
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
+  } catch (error) {
+    console.error("Error signing in:", error);
+    throw error;
   }
-  return result;
 };
 
 export const userGoogleSignIn = async () => {
-  let result = null;
-  const provider = new GoogleAuthProvider();
-
   try {
-    await signInWithPopup(auth, provider).then((userCredential) => {
-      result = userCredential.user;
-    });
-  } catch (e) {
-    result = e.code;
+    const provider = new GoogleAuthProvider();
+    const userCredential = await signInWithPopup(auth, provider);
+    return userCredential.user;
+  } catch (error) {
+    console.error("Error signing in with Google:", error);
+    throw error;
   }
-  return result;
 };
 
 export const userSignOut = async () => {
-  let result = null;
   try {
-    await signOut(auth).then(() => {});
-  } catch (e) {
-    result = e.code;
-    console.warn(e.message);
+    await signOut(auth);
+    return true; // Sign-out successful
+  } catch (error) {
+    console.error("Error signing out:", error);
+    throw error;
   }
-  return result;
 };

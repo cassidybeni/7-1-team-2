@@ -1,28 +1,28 @@
-import dotenv from "dotenv";
-import { initializeApp } from "firebase/app";
-import "firebase/auth";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
   updateProfile,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
 } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
-dotenv.config();
-
-initializeApp({
+const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
-});
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+};
+
+const app = initializeApp(firebaseConfig);
+// eslint-disable-next-line no-unused-vars
+const analytics = getAnalytics(app);
 
 export const auth = getAuth();
 
@@ -44,8 +44,7 @@ export const userSignIn = async (email, password) => {
   let result = null;
   try {
     await signInWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-      }
+      (userCredential) => {}
     );
   } catch (e) {
     result = e.code;
@@ -70,8 +69,7 @@ export const userGoogleSignIn = async () => {
 export const userSignOut = async () => {
   let result = null;
   try {
-    await signOut(auth).then(() => {
-    });
+    await signOut(auth).then(() => {});
   } catch (e) {
     result = e.code;
     console.warn(e.message);

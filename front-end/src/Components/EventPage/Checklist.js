@@ -31,7 +31,7 @@ function Checklist({ categories, user_id, event_id, updateCost, eventName }) {
     if (!bookedStatus[category] === false) {
       try {
         axios
-          .delete(`${api}/booked/${user_id}/${event_id}/${category}`)
+          .delete(`${API}/booked/${user_id}/${event_id}/${category}`)
           .then((res) => {
             let checklistBody = {
               task_cost: 0,
@@ -46,7 +46,7 @@ function Checklist({ categories, user_id, event_id, updateCost, eventName }) {
 
     try {
       axios
-        .put(`${api}/checklist/${user_id}/${event_id}`, body)
+        .put(`${API}/checklist/${user_id}/${event_id}`, body)
         .then((response) => {
           setBookedStatus({
             ...bookedStatus,

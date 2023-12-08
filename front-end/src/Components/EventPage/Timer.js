@@ -13,7 +13,7 @@ function Timer({ user_id }) {
 
   useEffect(() => {
     try {
-      axios.get(`${api}/events/${user_id}/${event_id}`).then((response) => {
+      axios.get(`${API}/events/${user_id}/${event_id}`).then((response) => {
         const data = response.data.payload;
         setDate(data.event_date.slice(0, 10));
         setTime(data.event_time);

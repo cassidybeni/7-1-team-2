@@ -19,7 +19,7 @@ export default function Event({ formatter, user_id }) {
   useEffect(() => {
     if (user_id) {
       try {
-        axios.get(`${api}/events/${user_id}/${event_id}`).then((response) => {
+        axios.get(`${API}/events/${user_id}/${event_id}`).then((response) => {
           const data = response.data.payload;
           setEventName(data.event_name);
           setBudget(data.event_budget);
@@ -30,7 +30,7 @@ export default function Event({ formatter, user_id }) {
 
       try {
         axios
-          .get(`${api}/checklist/${user_id}/${event_id}`)
+          .get(`${API}/checklist/${user_id}/${event_id}`)
           .then((response) => {
             const data = response.data.payload;
             const vendorCategories = data.map((point) => {
@@ -65,7 +65,7 @@ export default function Event({ formatter, user_id }) {
   const updateCost = (body, category) => {
     try {
       axios
-        .put(`${api}/checklist/cost/${user_id}/${event_id}`, body)
+        .put(`${API}/checklist/cost/${user_id}/${event_id}`, body)
         .then((response) => {
           setShownCost({ ...shownCost, [category]: body.task_cost });
         });

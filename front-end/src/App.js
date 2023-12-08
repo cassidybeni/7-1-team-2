@@ -57,7 +57,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      if (loggedInUser.currentUser) {
+      if (loggedInUser && loggedInUser.currentUser) {
         const email = loggedInUser.currentUser.email;
         let checkUser = await axios.get(`${API}/users/${email}`);
         if (checkUser.data.success) {

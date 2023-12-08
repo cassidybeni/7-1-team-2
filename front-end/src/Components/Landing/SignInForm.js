@@ -1,6 +1,5 @@
-import React, { useState, useNavigate } from "react";
-import { Link } from "react-router-dom";
-import { withRouter  } from "react-router";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../../css/SignInForm.css";
 import { userGoogleSignIn, userSignIn } from "../../Services/Firebase";
 import axios from "axios";
@@ -101,7 +100,7 @@ function SignInForm() {
           Sign In with Google
         </button>
         <div className="divider"></div>
-        <Link to="/SignUp" className="SignUp-But">
+        <Link to="/signup" className="SignUp-But">
           <p>
             {" "}
             Dont have an account? 
@@ -114,4 +113,4 @@ function SignInForm() {
   );
 }
 
-export default withRouter(SignInForm);
+export default SignInForm;

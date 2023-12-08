@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
-import { UserContext } from "./Providers/UserProvider";
+import React, { useEffect, useState, useContext } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { UserContext, UserProvider } from "./Providers/UserProvider";
 import Booked from "./Pages/Booked.js";
 import Dashboard from "./Pages/Dashboard.js";
 import Event from "./Pages/EventPage";
@@ -65,7 +65,7 @@ function App() {
           setSignedOut(false);
         }
 
-        const name = loggedInUser
+        const name = loggedInUser.currentUser.displayName
           ? loggedInUser.currentUser.displayName
               .split(" ")[0][0]
               .toUpperCase() +
@@ -75,24 +75,16 @@ function App() {
         setFormattedName(name);
       }
     })();
-    return () => {
-      // cleanup
-      // setUserId(null)
-    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedInUser]);
 
   useEffect(() => {
     if (user_id) {
       axios
         .get(`${API}/events/${user_id}`)
-        .then(
-          (res) => {
-            setEvents(res.data.message);
-          },
-          (e) => {
-            console.error(e);
-          }
-        )
+        .then((res) => {
+          setEvents(res.data.message);
+        })
         .catch((e) => {
           console.error(e);
         });
@@ -101,14 +93,9 @@ function App() {
 
   const deleteEvent = async (event_id) => {
     try {
-      await axios.delete(`${API}/events/${user_id}/${event_id}`).then((res) => {
-        const eventsCopy = [...events];
-        const index = eventsCopy.findIndex(
-          (event) => event.event_id === event_id
-        );
-        eventsCopy.splice(index, 1);
-        setEvents(eventsCopy);
-      });
+      await axios.delete(`${API}/events/${user_id}/${event_id}`);
+      const eventsCopy = events.filter((event) => event.event_id !== event_id);
+      setEvents(eventsCopy);
     } catch (error) {
       console.error(error);
     }
@@ -116,93 +103,115 @@ function App() {
 
   return (
     <div className="site">
-      <Router>
-        <ScrollToTop />
-        {signedOut ? <Banner /> : <NavBar setSignedOut={setSignedOut} />}
-        <Switch>
-          <Route exact path="/">
-            <Landing />
-          </Route>
+      <UserProvider>
+        <Router>
+          <ScrollToTop />
+          {signedOut ? <Banner /> : <NavBar setSignedOut={setSignedOut} />}
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
 
-          <Route path="/signup">
-            <SignUp />
-          </Route>
+            <Route
+              path="/dashboard/:event_id/edit"
+              element={
+                <PrivateRoute
+                  component={
+                    <EditFormPage
+                      setUpdateEvent={setUpdateEvent}
+                      user_id={user_id}
+                    />
+                  }
+                />
+              }
+            />
 
-          <Route path="/signin">
-            <SignIn />
-          </Route>
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute
+                  component={
+                    <Dashboard
+                      deleteEvent={deleteEvent}
+                      events={events}
+                      setUpdateEvent={setUpdateEvent}
+                      user_id={user_id}
+                      formattedName={formattedName}
+                      created={created}
+                      setCreated={setCreated}
+                    />
+                  }
+                />
+              }
+            />
 
-          <PrivateRoute
-            path="/dashboard/:event_id/edit"
-            component={EditFormPage}
-            setUpdateEvent={setUpdateEvent}
-            user_id={user_id}
-          />
+            <Route
+              path="/task/:category/:event_id/:task_id"
+              element={
+                <PrivateRoute
+                  component={
+                    <EditBooked
+                      lat={lat}
+                      lng={lng}
+                      formatter={formatter}
+                      user_id={user_id}
+                    />
+                  }
+                />
+              }
+            />
 
-          <PrivateRoute
-            path={"/dashboard"}
-            component={Dashboard}
-            deleteEvent={deleteEvent}
-            events={events}
-            setUpdateEvent={setUpdateEvent}
-            user_id={user_id}
-            formattedName={formattedName}
-            created={created}
-            setCreated={setCreated}
-            //   eventId={eventId}
-            // setEventId={setEventId}
-          />
+            <Route
+              path="/event/:event_id"
+              element={
+                <PrivateRoute
+                  component={<Event formatter={formatter} user_id={user_id} />}
+                />
+              }
+            />
 
-          <PrivateRoute
-            path="/task/:category/:event_id/:task_id"
-            component={EditBooked}
-            lat={lat}
-            lng={lng}
-            formatter={formatter}
-            user_id={user_id}
-          />
+            <Route
+              path="/vendor/:category/:provider_id"
+              element={
+                <PrivateRoute component={<VendorShow user_id={user_id} />} />
+              }
+            />
 
-          <PrivateRoute
-            path="/event/:event_id"
-            component={Event}
-            formatter={formatter}
-            user_id={user_id}
-          />
+            <Route
+              path="/favorites"
+              element={
+                <PrivateRoute
+                  component={
+                    <Favorites
+                      loggedInUser={loggedInUser}
+                      user_id={user_id}
+                      formattedName={formattedName}
+                    />
+                  }
+                />
+              }
+            />
 
-          <PrivateRoute
-            path="/vendor/:category/:provider_id"
-            component={VendorShow}
-            user_id={user_id}
-          />
+            <Route
+              path="/vendors/:category"
+              element={
+                <PrivateRoute
+                  component={<VendorIndex lat={lat} lng={lng} city={city} />}
+                />
+              }
+            />
 
-          <PrivateRoute
-            path="/favorites"
-            component={Favorites}
-            loggedInUser={loggedInUser}
-            user_id={user_id}
-            formattedName={formattedName}
-          />
+            <Route
+              path="/booked/:event_id/:event_name"
+              element={
+                <PrivateRoute component={<Booked user_id={user_id} />} />
+              }
+            />
 
-          <PrivateRoute
-            path="/vendors/:category"
-            component={VendorIndex}
-            lat={lat}
-            lng={lng}
-            // location={location}
-            city={city}
-          />
-
-          <PrivateRoute
-            path="/booked/:event_id/:event_name"
-            component={Booked}
-            user_id={user_id}
-          />
-
-          <Route path="*">
-            <FourOFour />
-          </Route>
-        </Switch>
-      </Router>
+            <Route path="*" element={<FourOFour />} />
+          </Routes>
+        </Router>
+      </UserProvider>
     </div>
   );
 }

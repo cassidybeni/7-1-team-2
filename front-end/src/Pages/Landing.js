@@ -1,28 +1,39 @@
 import React, { useContext } from "react";
-import "../css/Landing.css";
-import { Link } from "react-router-dom";
 import { UserContext } from "../Providers/UserProvider";
+import { useNavigate } from "react-router-dom";
 import call2action from "../assets/call2action.jpg";
+import "../css/Landing.css";
 
-export default function Landing() {
-  const user = useContext(UserContext);
+function Landing() {
+  const { currentUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const isUserLoggedIn = currentUser !== null;
+
+  const handleNavigation = () => {
+    if (isUserLoggedIn) {
+      navigate("/dashboard");
+    } else {
+      navigate("/signin");
+    }
+  };
 
   return (
     <div className="Landing-Container">
       <div className="Landing">
         <span>
           <div className="a">
-            <Link to={user ? "/dashboard" : "/signin"}>
-              <img
-                src={call2action}
-                alt="call2action"
-                display="block"
-                className="call2action drop"
-              />
-            </Link>
+            <img
+              src={call2action}
+              alt="call2action"
+              display="block"
+              className="call2action drop"
+              onClick={handleNavigation}
+              style={{ cursor: "pointer" }}
+            />
           </div>
         </span>
-        <h2  className="col-h">( Our Mission )</h2>
+        <h2 className="col-h">( Our Mission )</h2>
         <span>
           <p>
             Here at Event(ful), we simplify all your planning needs and keep all
@@ -35,3 +46,5 @@ export default function Landing() {
     </div>
   );
 }
+
+export default Landing;

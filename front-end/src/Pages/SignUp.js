@@ -34,9 +34,8 @@ export default function SignUp() {
       } else {
         toast.error("Please enter all required info", { toastId: "customId" });
       }
-    } catch (error) {
-      console.error('Error signing up:', error);
-      alert(error.message); // Display error message
+    } catch (e) {
+      console.error(e);
     }
   };
 

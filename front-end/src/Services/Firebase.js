@@ -1,7 +1,6 @@
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  updateProfile,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
@@ -26,14 +25,13 @@ const analytics = getAnalytics(app);
 const auth = getAuth();
 export { auth };
 
-export const userSignUp = async (email, password, userName) => {
+export const userSignUp = async (email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    await updateProfile(userCredential.user, { displayName: userName });
     return userCredential.user;
   } catch (error) {
     console.error("Error signing up:", error);

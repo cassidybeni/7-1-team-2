@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { userSignUp } from "../Services/Firebase";
@@ -21,22 +22,21 @@ export default function SignUp() {
   const handleSignUp = async (event) => {
     event.preventDefault();
     try {
-      let res = await userSignUp(input.userName, input.email, input.password);
-      if (res === null) {
+      const res = await userSignUp(input.email, input.password, input.userName);
+      if (res) {
         const newUser = { email: input.email, password: input.password };
-        let result = await axios.post(`${API}/users`, newUser);
+        const result = await axios.post(`${API}/users`, newUser);
         if (result.data.success) {
           history.push("/dashboard");
         } else {
-          console.warn("could not add new user to backend database");
+          console.warn("Could not add new user to the backend database");
         }
       } else {
-        toast.error("Please enter all required info", {
-          toastId: "customId",
-        });
+        toast.error("Please enter all required info", { toastId: "customId" });
       }
     } catch (error) {
-      alert(error);
+      console.error('Error signing up:', error);
+      alert(error.message); // Display error message
     }
   };
 

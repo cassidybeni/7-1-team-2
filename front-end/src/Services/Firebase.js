@@ -9,7 +9,6 @@ import {
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -24,10 +23,10 @@ const app = initializeApp(firebaseConfig);
 // eslint-disable-next-line no-unused-vars
 const analytics = getAnalytics(app);
 
-export const auth = getAuth();
+const auth = getAuth();
+export { auth };
 
-export const userSignUp = async (userName, email, password) => {
-  let result = null;
+export const userSignUp = async (email, password, userName) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -35,11 +34,11 @@ export const userSignUp = async (userName, email, password) => {
       password
     );
     await updateProfile(userCredential.user, { displayName: userName });
-    result = userCredential.user;
-  } catch (e) {
-    result = e.code;
+    return userCredential.user;
+  } catch (error) {
+    console.error("Error signing up:", error);
+    throw error;
   }
-  return result;
 };
 
 export const userSignIn = async (email, password) => {

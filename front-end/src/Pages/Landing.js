@@ -29,7 +29,7 @@ function Landing() {
               display="block"
               className="call2action drop"
               onClick={handleNavigation}
-              style={{ cursor: "pointer", width: "100%" }}
+              style={{ cursor: "pointer", width: "100%", maxWidth: '650px'}}
             />
           </div>
         </span>

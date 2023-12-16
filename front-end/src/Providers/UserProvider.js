@@ -6,7 +6,7 @@ const API = process.env.REACT_APP_API;
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

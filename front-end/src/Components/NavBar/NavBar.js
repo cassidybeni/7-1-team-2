@@ -1,10 +1,10 @@
-import React, { useState, useNavigate } from "react";
+import React, { useState } from "react";
 import { VendorMenu } from "./VendorMenu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.css";
 import { userSignOut } from "../../Services/Firebase";
 
-export default function NavBar({setSignedOut}) {
+export default function NavBar({ setSignedOut }) {
   const [vendorClicked, setVendorClicked] = useState(false);
   const navigate = useNavigate();
   const handleVendorClick = () => {
@@ -24,15 +24,15 @@ export default function NavBar({setSignedOut}) {
       title: "My Favorites",
       url: `/favorites`,
       cName: "pg-buttons nav-but",
-    }
+    },
   ];
-  
+
   const signOut = async () => {
     try {
       let res = await userSignOut();
       if (res === null) {
-        setSignedOut(true)
-        navigate("/")
+        setSignedOut(true);
+        navigate("/");
       }
     } catch (e) {
       console.warn(e);

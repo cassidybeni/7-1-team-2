@@ -73,9 +73,6 @@ function App() {
             currentUser.displayName.split(" ")[0].substring(1);
 
           setFormattedName(formattedName);
-
-          // Log the displayName here
-          console.log(currentUser.displayName);
         } catch (error) {
           console.error("Error fetching user:", error);
         }

@@ -13,11 +13,14 @@ function SignInForm() {
     email: "",
     password: "",
   });
+
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+
   const signIn = async (e) => {
     e.preventDefault();
+
     try {
       let res = await userSignIn(input.email, input.password);
 
@@ -25,27 +28,20 @@ function SignInForm() {
         toast.error("Wrong email or password. Please try again", {
           toastId: "customId",
         });
-        setInput({
-          email: "",
-          password: "",
-        });
+        setInput({ email: "", password: "" });
       } else {
-        // Check the condition for successful sign-in
-        if (res.success) {
-          // Successfully signed in, navigate to the dashboard or another route
+        if (res && res.uid) {
           navigate("/dashboard");
         } else {
           toast.error("Wrong email or password. Please try again", {
             toastId: "customId",
           });
-          setInput({
-            email: "",
-            password: "",
-          });
+          setInput({ email: "", password: "" });
         }
       }
-    } catch (error) {
-      alert(error); // Display an error message or handle the error as needed
+    } catch (e) {
+      console.error(e);
+      alert(e);
     }
   };
 

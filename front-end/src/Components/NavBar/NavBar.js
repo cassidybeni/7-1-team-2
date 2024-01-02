@@ -30,12 +30,12 @@ export default function NavBar({ setSignedOut }) {
   const signOut = async () => {
     try {
       let res = await userSignOut();
-      if (res === null) {
+      if (res === true) {
         setSignedOut(true);
         navigate("/");
       }
     } catch (e) {
-      console.warn(e);
+      console.error(e);
     }
   };
 

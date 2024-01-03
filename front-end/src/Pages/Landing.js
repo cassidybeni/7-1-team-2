@@ -8,10 +8,8 @@ function Landing() {
   const { currentUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const isUserLoggedIn = currentUser !== null;
-
   const handleNavigation = () => {
-    if (isUserLoggedIn) {
+    if (currentUser !== null) {
       navigate("/dashboard");
     } else {
       navigate("/signin");

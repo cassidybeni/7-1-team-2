@@ -8,6 +8,7 @@ function Landing() {
   const { currentUser } = useContext(UserContext);
   const navigate = useNavigate();
 
+  
   const handleNavigation = () => {
     if (currentUser !== null) {
       navigate("/dashboard");

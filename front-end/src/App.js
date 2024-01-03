@@ -24,7 +24,7 @@ import "./App.css";
 const API = process.env.REACT_APP_API;
 
 function App() {
-  const { currentUser } = useContext(UserContext) || {};
+  const { currentUser } = useContext(UserContext);
   const [user_id, setUserId] = useState(null);
   const [created, setCreated] = useState(false);
   const [events, setEvents] = useState([]);
@@ -73,8 +73,8 @@ function App() {
             currentUser.displayName.split(" ")[0].substring(1);
 
           setFormattedName(formattedName);
-        } catch (error) {
-          console.error("Error fetching user:", error);
+        } catch (e) {
+          console.error(e);
         }
       }
     };

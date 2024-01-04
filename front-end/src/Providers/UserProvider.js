@@ -8,6 +8,15 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
+  const userSignOut = async () => {
+    auth
+      .signOut()
+      .then(() => {})
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -36,7 +45,7 @@ export const UserProvider = ({ children }) => {
   }, [currentUser]);
 
   return (
-    <UserContext.Provider value={{ currentUser }}>
+    <UserContext.Provider value={{ currentUser, setCurrentUser, userSignOut }}>
       {children}
     </UserContext.Provider>
   );

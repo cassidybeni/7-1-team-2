@@ -24,7 +24,7 @@ import "./App.css";
 const API = process.env.REACT_APP_API;
 
 function App() {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const [user_id, setUserId] = useState(null);
   const [created, setCreated] = useState(false);
   const [events, setEvents] = useState([]);
@@ -32,7 +32,6 @@ function App() {
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
   const [city, setCity] = useState("");
-  const [signedOut, setSignedOut] = useState(true);
   const [formattedName, setFormattedName] = useState("");
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -65,7 +64,7 @@ function App() {
           if (checkUser.data.success) {
             const userId = checkUser.data.payload.user_id;
             setUserId(userId);
-            setSignedOut(false);
+            setCurrentUser(null)
           }
 
           const formattedName =
@@ -80,7 +79,7 @@ function App() {
     };
 
     fetchData();
-  }, [currentUser, updateEvent]);
+  }, [currentUser, updateEvent, setCurrentUser]);
 
   const deleteEvent = async (event_id) => {
     try {
@@ -96,7 +95,7 @@ function App() {
     <div className="site">
       <Router>
         <ScrollToTop />
-        {signedOut ? <Banner /> : <NavBar setSignedOut={setSignedOut} />}
+        {currentUser === null ? <Banner /> : <NavBar />}
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/signup" element={<SignUp />} />

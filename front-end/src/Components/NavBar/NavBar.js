@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { VendorMenu } from "./VendorMenu";
 import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.css";
-import { userSignOut } from "../../Services/Firebase";
+import { UserContext } from "../../Providers/UserProvider";
 
-export default function NavBar({ setSignedOut }) {
+export default function NavBar() {
   const [vendorClicked, setVendorClicked] = useState(false);
+  const { currentUser, setCurrentUser, userSignOut } = useContext(UserContext);
   const navigate = useNavigate();
   const handleVendorClick = () => {
     setVendorClicked(!vendorClicked);
@@ -27,13 +28,16 @@ export default function NavBar({ setSignedOut }) {
     },
   ];
 
-  const signOut = async () => {
+  useEffect(() => {
+    console.log("Current User Updated:", currentUser);
+  }, [currentUser]);
+
+
+  const handleSignOut = async () => {
     try {
-      let res = await userSignOut();
-      if (res === true) {
-        setSignedOut(true);
-        navigate("/");
-      }
+      await userSignOut();
+      setCurrentUser(null)
+      navigate('/')
     } catch (e) {
       console.error(e);
     }
@@ -60,7 +64,7 @@ export default function NavBar({ setSignedOut }) {
             </li>
           );
         })}
-        <li className="accountLinks" onClick={signOut}>
+        <li className="accountLinks" onClick={handleSignOut}>
           {" "}
           <span className="pg-buttons nav-but logout">Logout</span>
         </li>

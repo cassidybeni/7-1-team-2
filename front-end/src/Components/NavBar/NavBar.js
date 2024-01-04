@@ -28,16 +28,11 @@ export default function NavBar() {
     },
   ];
 
-  useEffect(() => {
-    console.log("Current User Updated:", currentUser);
-  }, [currentUser]);
-
-
   const handleSignOut = async () => {
     try {
       await userSignOut();
-      setCurrentUser(null)
-      navigate('/')
+      setCurrentUser(null);
+      navigate("/");
     } catch (e) {
       console.error(e);
     }

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { VendorMenu } from "./VendorMenu";
 import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.css";
@@ -6,7 +6,7 @@ import { UserContext } from "../../Providers/UserProvider";
 
 export default function NavBar() {
   const [vendorClicked, setVendorClicked] = useState(false);
-  const { currentUser, setCurrentUser, userSignOut } = useContext(UserContext);
+  const { setCurrentUser, userSignOut } = useContext(UserContext);
   const navigate = useNavigate();
   const handleVendorClick = () => {
     setVendorClicked(!vendorClicked);

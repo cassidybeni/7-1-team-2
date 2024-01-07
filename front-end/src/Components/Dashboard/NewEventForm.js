@@ -5,7 +5,7 @@ import Form from "./Form.js";
 
 const API = process.env.REACT_APP_API;
 
-function NewEventForm({ user_id, created, setCreated }) {
+function NewEventForm({ user_id, created, setCreated, setUpdateEvent }) {
   const [eventId, setEventId] = useState(null);
   const [myEvent, setEvent] = useState({
     event_name: "",
@@ -45,6 +45,7 @@ function NewEventForm({ user_id, created, setCreated }) {
           created={created}
           setCreated={setCreated}
           user_id={user_id}
+          setUpdateEvent={setUpdateEvent}
         />
       ) : (
         <Form

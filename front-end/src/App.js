@@ -64,7 +64,13 @@ function App() {
           if (checkUser.data.success) {
             const userId = checkUser.data.payload.user_id;
             setUserId(userId);
-            setCurrentUser(null)
+            setCurrentUser(null);
+
+            const res = await axios.get(`${API}/events/${userId}`);
+            if (res.data.success) {
+              const events = res.data;
+              setEvents(events);
+            }
           }
 
           const formattedName =
@@ -79,7 +85,7 @@ function App() {
     };
 
     fetchData();
-  }, [currentUser, updateEvent, setCurrentUser]);
+  }, [currentUser, setCurrentUser]);
 
   const deleteEvent = async (event_id) => {
     try {

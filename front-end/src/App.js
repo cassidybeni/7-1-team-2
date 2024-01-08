@@ -90,8 +90,12 @@ function App() {
   const deleteEvent = async (event_id) => {
     try {
       await axios.delete(`${API}/events/${user_id}/${event_id}`);
-      const eventsCopy = events.filter((event) => event.event_id !== event_id);
-      setEvents(eventsCopy);
+      setEvents((prevEvents) => {
+        if (!Array.isArray(prevEvents)) {
+          return [];
+        }
+        return prevEvents.filter((event) => event.event_id !== event_id);
+      });
     } catch (error) {
       console.error(error);
     }

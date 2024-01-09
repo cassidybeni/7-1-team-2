@@ -22,6 +22,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./App.css";
 
 const API = process.env.REACT_APP_API;
+const accessKey = process.env.REACT_APP_ACCESS_KEY
 
 function App() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -40,15 +41,17 @@ function App() {
 
   useEffect(() => {
     try {
-      axios
-        .get(
-          "https://event-ful.adaptable.app/https://api.freegeoip.app/json?apikey=94974ea0-347f-11ec-a667-11ee2dd024a0"
-        )
-        .then((res) => {
-          setLat(res.data.latitude);
-          setLng(res.data.longitude);
-          setCity(`${res.data.city}, ${res.data.region_name}`);
-        });
+      axios.get("https://api.ipify.org?format=json").then((ipRes) => {
+        const IP = ipRes.data.ip;
+        axios
+          .get(`http://api.ipstack.com/${IP}?access_key=${accessKey}`)
+          .then((res) => {
+            const data = res.data;
+            setLat(data.latitude);
+            setLng(data.longitude);
+            setCity(`${data.city}, ${data.region_name}`);
+          });
+      });
     } catch (e) {
       console.warn(e);
     }

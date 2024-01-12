@@ -44,9 +44,10 @@ function App() {
       axios.get("https://api.ipify.org?format=json").then((ipRes) => {
         const IP = ipRes.data.ip;
         axios
-          .get(`https://api.ipstack.com/${IP}?access_key=${accessKey}`)
+          .get(`http://api.ipstack.com/${IP}?access_key=${accessKey}`)
           .then((res) => {
             const data = res.data;
+            console.log(res.data)
             setLat(data.latitude);
             setLng(data.longitude);
             setCity(`${data.city}, ${data.region_name}`);

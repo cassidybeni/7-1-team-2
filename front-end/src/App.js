@@ -44,7 +44,7 @@ function App() {
       axios.get("https://api.ipify.org?format=json").then((ipRes) => {
         const IP = ipRes.data.ip;
         axios
-          .get(`http://api.ipstack.com/${IP}?access_key=${accessKey}`)
+          .get(`https://api.ipstack.com/${IP}?access_key=${accessKey}`)
           .then((res) => {
             const data = res.data;
             setLat(data.latitude);

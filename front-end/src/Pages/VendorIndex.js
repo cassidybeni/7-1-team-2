@@ -32,7 +32,7 @@ export default function VendorIndex({ lat, lng, city }) {
       )
       .then(res => { 
         const {data} = res
-        if (data.businesses[0].id){
+        if (data.businesses){
           setVendors(data.businesses)
         }
         setSearched(true)

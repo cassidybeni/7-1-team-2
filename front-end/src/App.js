@@ -22,7 +22,6 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./App.css";
 
 const API = process.env.REACT_APP_API;
-const accessKey = process.env.REACT_APP_ACCESS_KEY
 
 function App() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -44,10 +43,10 @@ function App() {
       axios.get("https://api.ipify.org?format=json").then((ipRes) => {
         const IP = ipRes.data.ip;
         axios
-          .get(`http://api.ipstack.com/${IP}?access_key=${accessKey}`)
+          .get(`https://event-ful.adaptable.app/proxy/${IP}`)
           .then((res) => {
             const data = res.data;
-            console.log(res.data)
+            console.log(data)
             setLat(data.latitude);
             setLng(data.longitude);
             setCity(`${data.city}, ${data.region_name}`);

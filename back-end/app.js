@@ -11,7 +11,7 @@ const usersController = require("./Controllers/usersController");
 // CONFIGURATION
 const app = express();
 const corsOptions = {
-  origin: "https://event-ful.adaptable.app",
+  origin: "https://eventful-capstone.netlify.app",
   credentials: true,
 };
 

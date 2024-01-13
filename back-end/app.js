@@ -31,6 +31,17 @@ app.use("/favorites", favoritesController);
 app.use("/booked", bookedController);
 app.use("/users", usersController);
 
+app.get('/proxy-ipstack', async (req, res) => {
+  const { ip, accessKey } = req.query;
+
+  try {
+      const response = await axios.get(`http://api.ipstack.com/${ip}?access_key=${accessKey}`);
+      res.json(response.data);
+  } catch (error) {
+      res.status(error.response?.status || 500).json({ error: error.message });
+  }
+});
+
 app.get("*", (req, res) => {
   res.send("page not found");
 });

@@ -38,26 +38,26 @@ function App() {
     currency: "USD",
   });
 
-  const access_key = process.env.REACT_APP_ACCESS_KEY
-
   useEffect(() => {
-    try {
-      axios.get("https://api.ipify.org?format=json").then((ipRes) => {
+    const fetchData = async () => {
+      try {
+        const ipRes = await axios.get("https://api.ipify.org?format=json");
         const IP = ipRes.data.ip;
-        axios
-          .get(`http://api.ipstack.com/${IP}?access_key=${access_key}`)
-          .then((res) => {
-            const data = res.data;
-            console.log(data)
-            setLat(data.latitude);
-            setLng(data.longitude);
-            setCity(`${data.city}, ${data.region_name}`);
-          });
-      });
-    } catch (e) {
-      console.warn(e);
-    }
-  }, [access_key]);
+        const proxyUrl = "https://event-ful.adaptable.app/proxy-ipstack";
+        const access_key = process.env.REACT_APP_ACCESS_KEY;
+        const res = await axios.get(
+          `${proxyUrl}?ip=${IP}&accessKey=${access_key}`
+        );
+        const data = res.data;
+        setLat(data.latitude);
+        setLng(data.longitude);
+        setCity(`${data.city}, ${data.region_name}`);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

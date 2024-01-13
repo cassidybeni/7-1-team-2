@@ -9,6 +9,10 @@ const usersController = require("./Controllers/usersController");
 
 // CONFIGURATION
 const app = express();
+const corsOptions = {
+  origin: "https://event-ful.adaptable.app",
+  optionsSuccessStatus: 200,
+};
 
 app.use(cors());
 
@@ -20,20 +24,7 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
-app.get("/proxy/:ip", async (req, res) => {
-  const { ip } = req.params;
-  const accessKey = process.env.ACCESS_KEY;
-  try {
-    const response = await axios.get(
-      `http://api.ipstack.com/${ip}?access_key=${accessKey}`
-    );
-    res.json(response.data);
-  } catch (e) {
-    console.error(e);
-    res.status(500).send("error");
-  }
-});
-
+app.use(cors(corsOptions));
 app.use("/events", eventsController);
 app.use("/checklist", checklistController);
 app.use("/favorites", favoritesController);

@@ -38,12 +38,14 @@ function App() {
     currency: "USD",
   });
 
+  const access_key = process.env.REACT_APP_ACCESS_KEY
+
   useEffect(() => {
     try {
       axios.get("https://api.ipify.org?format=json").then((ipRes) => {
         const IP = ipRes.data.ip;
         axios
-          .get(`https://event-ful.adaptable.app/proxy/${IP}`)
+          .get(`http://api.ipstack.com/${IP}?access_key=${access_key}`)
           .then((res) => {
             const data = res.data;
             console.log(data)
@@ -55,7 +57,7 @@ function App() {
     } catch (e) {
       console.warn(e);
     }
-  }, []);
+  }, [access_key]);
 
   useEffect(() => {
     const fetchData = async () => {

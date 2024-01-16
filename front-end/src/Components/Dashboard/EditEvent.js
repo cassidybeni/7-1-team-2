@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useNavigate } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/EditEvent.css";
 import { ToastContainer, toast } from "react-toastify";

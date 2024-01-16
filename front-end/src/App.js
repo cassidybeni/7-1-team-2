@@ -95,12 +95,26 @@ function App() {
   const deleteEvent = async (event_id) => {
     try {
       await axios.delete(`${API}/events/${user_id}/${event_id}`);
-      const eventsCopy = events.filter((event) => event.event_id !== event_id);
-      setEvents(eventsCopy);
-    } catch (error) {
-      console.error(error);
+      setEvents((prevEvents) => {
+        const filterEvents = (events) =>
+          events.filter((event) => event.event_id !== event_id);
+
+        if (prevEvents && Array.isArray(prevEvents.message)) {
+          const filteredEvents = filterEvents(prevEvents.message);
+          return { ...prevEvents, message: filteredEvents };
+        } else if (Array.isArray(prevEvents)) {
+          const filteredEvents = filterEvents(prevEvents);
+          return filteredEvents;
+        } else {
+          console.error("error");
+          return prevEvents;
+        }
+      });
+    } catch (e) {
+      console.error(e);
     }
   };
+
   return (
     <div className="site">
       <Router>

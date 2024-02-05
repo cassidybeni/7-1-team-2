@@ -98,17 +98,16 @@ function App() {
       setEvents((prevEvents) => {
         const filterEvents = (events) =>
           events.filter((event) => event.event_id !== event_id);
-
-        if (prevEvents && Array.isArray(prevEvents.message)) {
-          const filteredEvents = filterEvents(prevEvents.message);
-          return { ...prevEvents, message: filteredEvents };
-        } else if (Array.isArray(prevEvents)) {
-          const filteredEvents = filterEvents(prevEvents);
-          return filteredEvents;
+        let updatedEvents = {};
+        if (prevEvents && prevEvents.message) {
+          updatedEvents = {
+            ...prevEvents,
+            message: filterEvents(prevEvents.message),
+          };
         } else {
-          console.error("error");
-          return prevEvents;
+          updatedEvents = filterEvents(prevEvents);
         }
+        return updatedEvents;
       });
     } catch (e) {
       console.error(e);
